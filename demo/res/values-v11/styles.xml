@@ -1,0 +1,11 @@
+<resources>
+
+	<style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+		<!-- API 11 theme customizations can go here. -->
+	</style>
+
+	<style name="activated" parent="android:Theme.Holo">
+		<item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+	</style>
+
+</resources>
