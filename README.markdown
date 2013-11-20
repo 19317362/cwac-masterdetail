@@ -208,7 +208,9 @@ to the `MasterDetailHelper` for processing.
 
 Dependencies
 ------------
-This project depends on the Android Support package v13 edition.
+This project depends on the Android Support package v13 edition. Using
+`MasterDetailController` also requires
+[the CWAC-Pager JAR or Android library project](https://github.com/commonsguy/cwac-pager).
 
 This project requires an `android:minSdkVersion` of 14 or higher.
 
