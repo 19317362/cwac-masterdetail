@@ -60,20 +60,6 @@ abstract public class MasterDetailHelper<T> implements
     PagerListAdapter.Assistant, OnItemLongClickListener,
     MultiChoiceModeListener {
   /**
-   * Override this method to return your model object
-   * collection. The data type is up to you. For this
-   * specific class, this model collection is solely for
-   * state management in configuration changes, as
-   * MasterDetailHelper will ensure that the model
-   * collection is retained. You can retrieve your instance
-   * of your model collection via getModelCollection().
-   * 
-   * @return the collection of model objects to be displayed
-   *         in the associated activity
-   */
-  abstract protected T buildModelCollection();
-
-  /**
    * Override this to provide the PagerAdapter that
    * represents the detail pages to be shown. By default,
    * this will also drive the list of items to be shown in
@@ -188,6 +174,22 @@ abstract public class MasterDetailHelper<T> implements
         }
       }
     }
+  }
+
+  /**
+   * Override this method to return your model object
+   * collection. The data type is up to you. For this
+   * specific class, this model collection is solely for
+   * state management in configuration changes, as
+   * MasterDetailHelper will ensure that the model
+   * collection is retained. You can retrieve your instance
+   * of your model collection via getModelCollection().
+   * 
+   * @return the collection of model objects to be displayed
+   *         in the associated activity
+   */
+  protected T buildModelCollection() {
+    return(null);
   }
 
   /*
@@ -620,11 +622,11 @@ abstract public class MasterDetailHelper<T> implements
   /**
    * Override this to control whether or not an action mode
    * should be offered to the user via a long-click on a row
-   * in the master. The default value is false, meaning
-   * that an action mode will not be offered. Return true
-   * if you would like an action mode, in which case you
-   * will also need to override getActionModeResource() to
-   * return the menu resource to use. 
+   * in the master. The default value is false, meaning that
+   * an action mode will not be offered. Return true if you
+   * would like an action mode, in which case you will also
+   * need to override getActionModeResource() to return the
+   * menu resource to use.
    * 
    * @return true or false
    */
