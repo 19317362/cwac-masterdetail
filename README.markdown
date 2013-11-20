@@ -46,13 +46,6 @@ Make sure your `PagerAdapter` has a useful `getPageTitle()` implementation,
 just like you would if you were using `PagerTabStrip` or similar indicators
 with your `ViewPager`.
 
-Step #5: Override `buildModelCollection()` in your `MasterDetailHelper`
-to return your model collection, so that it can be retained across configuration
-changes. You can retrieve this later on by calling `getModelCollection()`
-on your `MasterDetailHelper`. Returning `null` should be safe. Note that this step
-will not be required in future editions of this library, as `buildModelCollection()`
-should not be `abstract`, but should just return `null` by default.
-
 And that's it.
 
 What you get includes:
@@ -91,6 +84,10 @@ Step #3: Override `buildMasterDetailHelper()` in your `MasterDetailActivity`
 to return an instance of your `MasterDetailController`.
 
 Step #4: Override a series of methods in your `MasterDetailController` subclass:
+
+- `buildModelCollection()`, to return an `ArrayList` of whatever your model class
+is, with whatever starter data you want to have (e.g., current values loaded
+from database)
 
 - `getModelTag()`, given an instance of a model object from your list, should
 return some uniquely identifying tag for that object
@@ -217,7 +214,7 @@ This project requires an `android:minSdkVersion` of 14 or higher.
 
 Version
 -------
-This is version v0.0.1, meaning that it is so new, it's scary.
+This is version v0.0.2, meaning that it is so new, it's scary.
 
 Demo
 ----
@@ -253,6 +250,7 @@ the fence may work, but it may not.
 
 Release Notes
 -------------
+- v0.0.2: fixed default implementations of `offerActionMode()` and `buildModelCollection()`
 - v0.0.1: initial release
 
 Who Made This?
