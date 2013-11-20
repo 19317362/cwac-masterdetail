@@ -99,4 +99,15 @@
     </javadoc> 
 </target>
 
+	<target name="jar" depends="release">
+		<delete file="bin/CWAC-MasterDetail.jar" />
+    <jar destfile="bin/CWAC-MasterDetail.jar">
+      <fileset dir="bin/classes">
+        <exclude name="**/BuildConfig.class" />
+        <exclude name="**/R.class" />
+        <exclude name="**/R$*.class" />
+      </fileset>
+    </jar>
+	</target>
+
 </project>
