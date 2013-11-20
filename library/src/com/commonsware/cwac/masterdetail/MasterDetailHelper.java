@@ -620,19 +620,16 @@ abstract public class MasterDetailHelper<T> implements
   /**
    * Override this to control whether or not an action mode
    * should be offered to the user via a long-click on a row
-   * in the master. The default value of true means "yes,
-   * please, I would really rather like it if the user would
-   * be offered an action mode", in which case you will also
-   * need to override getActionModeResource() to return the
-   * menu resource to use for that action mode. If, on the
-   * other hand, the thought of offering an action mode to
-   * your users fills you with dread, or is otherwise not
-   * what you want, override this to return false.
+   * in the master. The default value is false, meaning
+   * that an action mode will not be offered. Return true
+   * if you would like an action mode, in which case you
+   * will also need to override getActionModeResource() to
+   * return the menu resource to use. 
    * 
    * @return true or false
    */
   protected boolean offerActionMode() {
-    return(true);
+    return(false);
   }
 
   void showDetail(int position) {
