@@ -95,6 +95,30 @@ abstract public class MasterDetailHelper<T> implements
   private ActionMode activeMode=null;
   private Activity host=null;
   private ListView lv=null;
+  MasterDetailOptions options=null;
+
+  /**
+   * Constructor for a MasterDetailHelper. Usually, you
+   * would use the one-parameter constructor, to supply
+   * configuration options. But, in the off chance that you
+   * do not need any of that configuration, or for the very
+   * first use of this class, we have an empty constructor
+   * that should suffice.
+   */
+  public MasterDetailHelper() {
+    this(new MasterDetailOptions());
+  }
+
+  /**
+   * Constructor for a MasterDetailHelper
+   * 
+   * @param options
+   *          a MasterDetailOptions providing configuration
+   *          information for this helper
+   */
+  public MasterDetailHelper(MasterDetailOptions options) {
+    this.options=options;
+  }
 
   /**
    * Initializes the master-detail UI. This should be called
@@ -551,8 +575,8 @@ abstract public class MasterDetailHelper<T> implements
    *         if the device is wider than this value, use
    *         dual-pane mode instead of single-pane mode
    */
-  protected int getMinimumDipWidthForDualPane() {
-    return(720);
+  private int getMinimumDipWidthForDualPane() {
+    return(options.dualPaneWidthDip);
   }
 
   /**
@@ -565,8 +589,8 @@ abstract public class MasterDetailHelper<T> implements
    * @return some unique value to be used as the fragment
    *         tag for the fragment retaining the model
    */
-  protected String getModelFragmentTag() {
-    return("OMG-YOU-BETTER-NOT-USE-THIS-TAG-FOR-ANYTHING-ELSE");
+  private String getModelFragmentTag() {
+    return(options.modelFragmentTag);
   }
 
   /**
@@ -586,8 +610,8 @@ abstract public class MasterDetailHelper<T> implements
    * 
    * @return a menu resource value
    */
-  protected int getActionModeResource() {
-    return(-1);
+  private int getActionModeResource() {
+    return(options.actionModeResource);
   }
 
   /**
@@ -630,8 +654,8 @@ abstract public class MasterDetailHelper<T> implements
    * 
    * @return true or false
    */
-  protected boolean offerActionMode() {
-    return(false);
+  private boolean offerActionMode() {
+    return(getActionModeResource() > 0);
   }
 
   void showDetail(int position) {

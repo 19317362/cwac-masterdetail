@@ -68,25 +68,6 @@ abstract public class MasterDetailController<T> extends
   protected abstract Fragment buildFragmentForTag(String tag);
 
   /**
-   * @return a menu resource (e.g.,
-   *         R.menu.something_or_another) that will be
-   *         inflated into the action bar
-   */
-  abstract protected int getOptionsMenuResource();
-
-  /**
-   * @return the ID of a menu item (e.g., R.id.add) that
-   *         represents the "add" operation
-   */
-  abstract protected int getAddMenuId();
-
-  /**
-   * @return the ID of a menu item (e.g., R.id.remove) that
-   *         represents the "remove" operation
-   */
-  abstract protected int getRemoveMenuId();
-
-  /**
    * Implement this method to return a new model object, in
    * response to the user requesting to add a new model. You
    * do not have to add it to the model collection. You do,
@@ -116,6 +97,17 @@ abstract public class MasterDetailController<T> extends
    *          the model object to be removed from existence
    */
   abstract protected void removeModel(T model);
+
+  /**
+   * Constructor for a MasterDetailController
+   * 
+   * @param options
+   *          a MasterDetailOptions.Controller providing
+   *          configuration information for this helper
+   */
+  public MasterDetailController(MasterDetailController.Options options) {
+    super(options);
+  }
 
   /*
    * (non-Javadoc)
@@ -191,7 +183,9 @@ abstract public class MasterDetailController<T> extends
    * #onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(getOptionsMenuResource(), menu);
+    if (getOptionsMenuResource() >= 0) {
+      getMenuInflater().inflate(getOptionsMenuResource(), menu);
+    }
 
     return(true);
   }
@@ -299,6 +293,31 @@ abstract public class MasterDetailController<T> extends
     mode.setSubtitle(getActionModeSubtitle());
   }
 
+  /**
+   * @return a menu resource (e.g.,
+   *         R.menu.something_or_another) that will be
+   *         inflated into the action bar
+   */
+  private int getOptionsMenuResource() {
+    return(((MasterDetailController.Options)options).optionsMenuResource);
+  }
+
+  /**
+   * @return the ID of a menu item (e.g., R.id.add) that
+   *         represents the "add" operation
+   */
+  private int getAddMenuId() {
+    return(((MasterDetailController.Options)options).addMenuId);
+  }
+
+  /**
+   * @return the ID of a menu item (e.g., R.id.remove) that
+   *         represents the "remove" operation
+   */
+  private int getRemoveMenuId() {
+    return(((MasterDetailController.Options)options).removeMenuId);
+  }
+
   class ModelPagerAdapter extends ArrayPagerAdapter<Fragment> {
     public ModelPagerAdapter(FragmentManager fragmentManager,
                              ArrayList<PageDescriptor> descriptors) {
@@ -308,6 +327,53 @@ abstract public class MasterDetailController<T> extends
     @Override
     protected Fragment createFragment(PageDescriptor desc) {
       return(buildFragmentForTag(desc.getFragmentTag()));
+    }
+  }
+
+  /**
+   * Class for supplying configuration information to a
+   * MasterDetailController.
+   */
+  public static class Options extends MasterDetailOptions {
+    int optionsMenuResource=-1;
+    int addMenuId=-1;
+    int removeMenuId=-1;
+  
+    /**
+     * @param resource
+     *          a menu resource (e.g.,
+     *          R.menu.something_or_another) that will be
+     *          inflated into the action bar
+     * @return the options object
+     */
+    public Options optionsMenuResource(int resource) {
+      this.optionsMenuResource=resource;
+  
+      return(this);
+    }
+  
+    /**
+     * @param resource
+     *          the ID of a menu item (e.g., R.id.add) that
+     *          represents the "add" operation
+     * @return the options object
+     */
+    public Options addMenuId(int resource) {
+      this.addMenuId=resource;
+  
+      return(this);
+    }
+  
+    /**
+     * @param resource
+     *          the ID of a menu item (e.g., R.id.remove)
+     *          that represents the "remove" operation
+     * @return the options object
+     */
+    public Options removeMenuId(int resource) {
+      this.removeMenuId=resource;
+  
+      return(this);
     }
   }
 }

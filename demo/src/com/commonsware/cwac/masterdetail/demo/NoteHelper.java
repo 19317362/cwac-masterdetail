@@ -22,6 +22,20 @@ import java.util.UUID;
 import com.commonsware.cwac.masterdetail.MasterDetailController;
 
 public class NoteHelper extends MasterDetailController<Note> {
+  private static MasterDetailController.Options buildOptions() {
+    MasterDetailController.Options options=
+        new MasterDetailController.Options();
+
+    options.optionsMenuResource(R.menu.actions).addMenuId(R.id.add)
+           .removeMenuId(R.id.remove).actionMode(R.menu.action_mode);
+
+    return(options);
+  }
+
+  NoteHelper() {
+    super(buildOptions());
+  }
+
   @Override
   protected ArrayList<Note> buildModelCollection() {
     ArrayList<Note> result=new ArrayList<Note>();
@@ -41,38 +55,18 @@ public class NoteHelper extends MasterDetailController<Note> {
     return(EditorFragment.newInstance(tag));
   }
 
-  @Override
-  protected int getRemoveMenuId() {
-    return(R.id.remove);
-  }
-  
-  @Override
-  protected int getActionModeResource() {
-    return(R.menu.action_mode);
-  }
-
   @SuppressLint("DefaultLocale")
   @Override
   protected String getActionModeTitle() {
     return(String.format("Modifying %d item(s)",
                          getListView().getCheckedItemCount()));
   }
-  
-  @Override
-  protected int getOptionsMenuResource() {
-    return(R.menu.actions);
-  }
-  
-  @Override
-  protected int getAddMenuId() {
-    return(R.id.add);
-  }
-  
+
   @Override
   protected Note createNewModel() {
     return(new Note(buildKey(), buildTitle()));
   }
-  
+
   @Override
   protected void removeModel(Note model) {
     // TODO

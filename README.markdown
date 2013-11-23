@@ -103,15 +103,22 @@ model class (note: you do not need to add it to your list; that will be done for
 it (e.g., delete associated database row) (note: you do not need to remove it from your
 list; that will be done for you)
 
-- `getOptionsMenuResource()` and `getActionModeResource()`, to return menu resource
-identifiers (`R.menu.whatever`), to be used for the action bar and action mode,
-respectively
+Step #5: While technically optional, when you create your `MasterDetailController`,
+you will probably want to supply it with an instance of `MasterDetailController.Options`,
+where you can supply configuration data to the controller. Specifically, you will
+want to call the following methods on the `MasterDetailController.Options`:
 
-- `getAddMenuId()` should return the menu item ID (`R.id.whatever`) from the
-options menu resource, representing the add menu item
+- `optionsMenuResource()`, to provide a menu resource ID to use for the 
+options menu
 
-- `getRemoveMenuId()` should return the menu item ID (`R.id.whatever`) from the
-action mode resource, representing the remove menu item
+- `addMenu()`, to provide a menu item resource ID to show, in the options menu,
+to allow the user to add an item to your model collection
+
+- `actionModeResource()`, to provide a menu resource ID to use for the 
+action mode
+
+- `removeMenu()`, to provide a menu item resource ID to show, in the action mode,
+to allow the user to remiove an item from your model collection
 
 And that's it.
 
@@ -135,6 +142,45 @@ Simple Configuration and Usage
 This section outlines some fairly easy ways that you can augment what you get
 "out of the box" with this library.
 
+### MasterDetailOptions
+
+You can supply a `MasterDetailOptions` instance to your `MasterDetailHelper`
+via the one-parameter constructor. `MasterDetailController` takes a
+`MasterDetailController.Options` object, as noted previously, and
+`MasterDetailController.Options` is a subclass of `MasterDetailOptions`.
+
+This options object provides light configuration data to the `MasterDetailHelper`,
+to reduce the number of methods you need to override to get things to work.
+
+`MasterDetailOptions` supports:
+
+- `actionModeResource()`, to provide a menu resource ID to use for the 
+action mode
+
+- `modelFragmentTag()`, to provide the name to use for the fragment tag for
+the model fragment maintaining your model collection across configuration
+changes (usually, the default is fine)
+
+- `dualPaneWidthDip()`, to indicate how many `dip` is the "dividing line"
+between when we use single-pane mode (master *or* detail visible) or
+dual-pane mode (master *and* detail visible simultaneously) (default is `720dip`)
+
+`MasterDetailOptions` and `MasterDetailController.Options` offer fluent interfaces,
+so the aforementioned methods return an instance of the options object,
+allowing you to build an instance like this:
+
+```java
+  private static MasterDetailController.Options buildOptions() {
+    MasterDetailController.Options options=
+        new MasterDetailController.Options();
+
+    options.optionsMenuResource(R.menu.actions).addMenuId(R.id.add)
+           .removeMenuId(R.id.remove).actionMode(R.menu.action_mode);
+
+    return(options);
+  }
+```
+
 ### Action Bar
 
 Your `MasterDetailHelper` can override `onCreateOptionsMenu()` and `onOptionsItemSelected()`
@@ -145,8 +191,8 @@ library (particularly with `MasterDetailController`).
 ### Automatic Action Mode
 
 If your `MasterDetailHelper` wants an action mode to appear when the user long-presses
-on a list row, override `offerActionMode()` to return `true`, and override
-`getActionModeResource()` to return the menu resource ID (`R.menu.whatever`) to be
+on a list row, use `actionModeResource()` on the `MasterDetailOptions` object
+to return the menu resource ID (`R.menu.whatever`) to be
 used for the action mode itself. The library will handle starting and closing the
 action mode for you. You can also override the standard `ActionMode.Callback` methods
 on your `MasterDetailHelper` (e.g., `onActionItemClicked()`), though please chain
@@ -187,13 +233,6 @@ for the master. In this latter case, make sure that the `ListAdapter` and `Pager
 contents line up (e.g., the first row in the `ListAdapter` maps to the first page
 of the `PagerAdapter`).
 
-### Custom "Dividing Line" for Strategy
-
-The default behavior is to use the dual-pane display strategy when the device width
-is `720dp` or higher. You can change this "dividing line" between single-pane and
-dual-pane strategies by overriding `getMinimumDipWidthForDualPane()` on your
-`MasterDetailHelper`, returning the new width in `dp`.
-
 Advanced Configuration
 ----------------------
 In addition to the configuration hooks specified above, you can do more
@@ -216,7 +255,7 @@ This project requires an `android:minSdkVersion` of 14 or higher.
 
 Version
 -------
-This is version v0.0.2, meaning that it is so new, it's scary.
+This is version v0.1.0, meaning that it is progressing slowly.
 
 Demo
 ----
@@ -252,6 +291,7 @@ the fence may work, but it may not.
 
 Release Notes
 -------------
+- v0.1.0: moved simple configuration to `MasterDetailOptions` and `MasterDetailController.Options`
 - v0.0.2: fixed default implementations of `offerActionMode()` and `buildModelCollection()`
 - v0.0.1: initial release
 
