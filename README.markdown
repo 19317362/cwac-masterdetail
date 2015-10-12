@@ -1,3 +1,5 @@
+**THIS PROJECT IS RETIRED**
+
 CWAC-MasterDetail: Same UI Pattern, Fewer Moving Parts
 ======================================================
 
