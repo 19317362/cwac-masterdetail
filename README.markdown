@@ -274,22 +274,7 @@ the Apache Software License 2.0.
 
 Questions
 ---------
-If you have questions regarding the use of this code, please post a question
-on [StackOverflow](http://stackoverflow.com/questions/ask) tagged with `commonsware` and `android`. Be sure to indicate
-what CWAC module you are having issues with, and be sure to include source code 
-and stack traces if you are encountering crashes.
-
-If you have encountered what is clearly a bug, or if you have a feature request,
-please post an [issue](https://github.com/commonsguy/cwac-camera/issues).
-Be certain to include complete steps for reproducing the issue.
-
-Do not ask for help via Twitter.
-
-Also, if you plan on hacking
-on the code with an eye for contributing something back,
-please open an issue that we can use for discussing
-implementation details. Just lobbing a pull request over
-the fence may work, but it may not.
+**THIS PROJECT IS DISCONTINUED**
 
 Release Notes
 -------------
